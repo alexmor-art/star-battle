@@ -262,6 +262,9 @@ class Play extends Scene {
         this.appendElement();
 
         this.updateElements();
+        
+        // Process touch controls continuously during gameplay
+        this.processTouchControls();
     }
 
     updateTime() {
@@ -411,6 +414,157 @@ class Play extends Scene {
                 toggleMute()
             }
         )
+        
+        // Mobile touch controls
+        this.setupTouchControls();
+    }
+    
+    setupTouchControls() {
+        // Directional controls
+        on($('#control-up'), 'touchstart', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('up', true);
+        });
+        
+        on($('#control-up'), 'touchend', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('up', false);
+        });
+        
+        on($('#control-down'), 'touchstart', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('down', true);
+        });
+        
+        on($('#control-down'), 'touchend', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('down', false);
+        });
+        
+        on($('#control-left'), 'touchstart', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('left', true);
+        });
+        
+        on($('#control-left'), 'touchend', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('left', false);
+        });
+        
+        on($('#control-right'), 'touchstart', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('right', true);
+        });
+        
+        on($('#control-right'), 'touchend', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('right', false);
+        });
+        
+        // Shooting control
+        on($('#control-shoot'), 'touchstart', (e) => {
+            e.preventDefault();
+            this.handleTouchShoot(true);
+        });
+        
+        on($('#control-shoot'), 'touchend', (e) => {
+            e.preventDefault();
+            this.handleTouchShoot(false);
+        });
+        
+        // Also handle mouse events for testing on desktop
+        on($('#control-up'), 'mousedown', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('up', true);
+        });
+        
+        on($('#control-up'), 'mouseup', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('up', false);
+        });
+        
+        on($('#control-down'), 'mousedown', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('down', true);
+        });
+        
+        on($('#control-down'), 'mouseup', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('down', false);
+        });
+        
+        on($('#control-left'), 'mousedown', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('left', true);
+        });
+        
+        on($('#control-left'), 'mouseup', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('left', false);
+        });
+        
+        on($('#control-right'), 'mousedown', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('right', true);
+        });
+        
+        on($('#control-right'), 'mouseup', (e) => {
+            e.preventDefault();
+            this.handleTouchControl('right', false);
+        });
+        
+        on($('#control-shoot'), 'mousedown', (e) => {
+            e.preventDefault();
+            this.handleTouchShoot(true);
+        });
+        
+        on($('#control-shoot'), 'mouseup', (e) => {
+            e.preventDefault();
+            this.handleTouchShoot(false);
+        });
+    }
+    
+    handleTouchControl(direction, isActive) {
+        // Store active touch controls to handle continuous movement
+        if (!this.activeTouchControls) {
+            this.activeTouchControls = {};
+        }
+        
+        this.activeTouchControls[direction] = isActive;
+        
+        // Process all active touch controls
+        this.processTouchControls();
+    }
+    
+    processTouchControls() {
+        // Only process if game is running and not paused
+        if (!this.player || !this.player.run || this.pauseFlag || this.game.data.end) {
+            return;
+        }
+        
+        // Move the player based on active touch controls
+        if (this.activeTouchControls && this.activeTouchControls.up) {
+            this.player.up();
+        }
+        if (this.activeTouchControls && this.activeTouchControls.down) {
+            this.player.down();
+        }
+        if (this.activeTouchControls && this.activeTouchControls.left) {
+            this.player.left();
+        }
+        if (this.activeTouchControls && this.activeTouchControls.right) {
+            this.player.right();
+        }
+    }
+    
+    handleTouchShoot(isActive) {
+        if (!this.player || !isActive) return;
+        
+        // Call the fire method directly when the shoot button is pressed
+        if (this.player.run && !this.pauseFlag && !this.game.data.end) {
+            res.replay('shoot');
+            this.player.fire();
+        }
     }
 
     shoot() {

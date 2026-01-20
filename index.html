@@ -19,18 +19,18 @@
         <div id="container" class="absolute">
             <div id="start" class="column">
                 <p class="message pre">
-                    1. 使用 W、A、S、D 控制飞船，按下 Space 发射。
-                    2. 燃料初始值为15，每秒递减1点，当燃料值为0时，游戏结束。
-                    3. 触碰掉下的燃料瓶可增加15点，最大值为30点。
-                    4. 击中敌方飞船增加5分。行星需击中两次，增加10分。击中友方扣除10分。
-                    5. 撞击敌方损失15点燃料，撞击友方扣除10分。
-                    6. 游戏允许负分。
-                    7. 按下 P 暂停游戏，按下 M 静音。
-                    开始您的星际大战吧！
+                    1. Используйте W, A, S, D для управления кораблем, нажмите Пробел для выстрела.
+                    2. Начальное количество топлива 15, уменьшается на 1 каждую секунду, когда топливо заканчивается, игра окончена.
+                    3. При столкновении с бутылкой топлива добавляется 15 единиц, максимальное значение 30.
+                    4. При попадании в корабль противника добавляется 5 очков. Для уничтожения планеты требуется 2 попадания, за которые начисляется 10 очков. При попадании в союзный корабль вычитается 10 очков.
+                    5. При столкновении с кораблем противника теряется 15 единиц топлива, при столкновении с союзным кораблем вычитается 10 очков.
+                    6. В игре возможны отрицательные очки.
+                    7. Нажмите P для паузы, нажмите M для отключения звука.
+                    Начните вашу космическую битву!
                 </p>
                 <button id="start-btn" class="btn">
-                    <p>开始游戏</p>
-                    <p>加载中...</p>
+                    <p>Начать игру</p>
+                    <p>Загрузка...</p>
                 </button>
             </div>
             <div id="play" class="absolute">
@@ -74,6 +74,15 @@
                         </ul>
                     </div>
                 </div>
+                
+                <!-- Mobile Controls -->
+                <div id="mobile-controls" class="mobile-controls">
+                    <div id="control-left" class="control-btn control-directional">←</div>
+                    <div id="control-right" class="control-btn control-directional">→</div>
+                    <div id="control-up" class="control-btn control-directional">↑</div>
+                    <div id="control-down" class="control-btn control-directional">↓</div>
+                    <div id="control-shoot" class="control-btn control-action">🔫</div>
+                </div>
             </div>
             <div id="over" class="column absolute">
                 <div class="game-data">
@@ -105,19 +114,19 @@
                         <span class="shoot">00</span>
                     </p>
                 </div>
-                <input type="text" id="name" placeholder="请输入您的名字" />
+                <input type="text" id="name" placeholder="Введите ваше имя" />
                 <button id="submit-btn" class="btn" disabled>
-                    继续游戏
+                    Продолжить игру
                 </button>
             </div>
             <div id="rank" class="column absolute">
                 <table class="scroll">
                     <thead>
                         <tr>
-                            <th>名次</th>
-                            <th>名字</th>
-                            <th>分数</th>
-                            <th>秒数</th>
+                            <th>Рейтинг</th>
+                            <th>Имя</th>
+                            <th>Очки</th>
+                            <th>Время</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,7 +134,7 @@
                     </tbody>
                 </table>
                 <button id="restart-btn" class="btn">
-                    返回开始
+                    Вернуться в начало
                 </button>
             </div>
         </div>
